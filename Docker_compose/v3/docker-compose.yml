@@ -1,0 +1,38 @@
+version: '3.3'
+
+services:
+  db: 
+    container_name: mysql_container
+    image: mysql:5.7 
+    volumes:
+      - db_data:/var/lib/mysql
+    restart: always
+    env_file:
+      - .\config\db.env
+    networks:
+      - backend
+
+
+  wordpress:
+    container_name: wordpress_container
+    depends_on:
+      - db
+    image: wordpress:latest
+    volumes:
+      - www_volume:/var/www/html
+    ports: 
+      - "8000:80"
+    restart: always
+    env_file:
+      - .\config\wp.env
+    networks:
+      - backend
+    
+
+
+volumes:
+  db_data: {}
+  www_volume: {}
+
+netorks:
+  backend:

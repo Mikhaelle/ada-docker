@@ -1,0 +1,17 @@
+version: '3.3'
+
+services:
+  mysql_api_container: 
+    build: .\Projeto_Mysql 
+    container_name: mysql_api_container
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ALLOW_EMPTY_PASSWORD: 'true'
+
+  flask:
+    depends_on:
+      - mysql_api_container
+    build: .\Projeto_flask
+    ports:
+      - "5000:5000"
