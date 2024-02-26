@@ -1,0 +1,35 @@
+version: '3.8'
+
+services:
+  db:
+    image: mysql_image
+    container_name: mysql_api_container
+    build: .\Projeto_mysql
+    ports:
+      - "3306:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+    environment:
+      MYSQL_ALLOW_EMPTY_PASSWORD: 'true'
+
+  backend:
+    image: backend_image
+    container_name: backend_container
+    depends_on:
+      - db
+    build: .\Projeto_flask
+    ports:
+      - "5000:5000"
+
+  frontend:
+    image: my-frontend-app
+    container_name: my-frontend-container
+    build: .\my-react-app
+    ports:
+      - "8080:80" 
+    depends_on:
+      - backend
+      
+volumes:
+  db_data:
+    name: mysql_data
