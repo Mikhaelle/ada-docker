@@ -14,7 +14,7 @@ const MessageForm = () => {
         message: message,
       });
       console.log(res);
-      setResponse(`Menssagem ${message} guardada no banco com successo`);
+      setResponse(`Mensagem ${message} guardada no banco com successo`);
     } catch (error) {
       console.error("Error:", error);
       setResponse("Error inserting message.");
